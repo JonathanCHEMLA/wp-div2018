@@ -1,7 +1,7 @@
 <?php
 
 $texte_gauche = get_field('z2_texte_gauche');
-$texte_droite= get_field('z2_texte_droite');
+$texte_droite = get_field('z2_texte_droite');
 
 ?>
 

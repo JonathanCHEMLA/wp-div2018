@@ -28,8 +28,9 @@ function recent_posts_function($params=array(),$content=null ){
     $nb_col_bootstrap= 12/$nb;
 
     query_posts(array(
-        'orderby'   =>'date',
-        'order'     =>'DESC',
+        //'orderby'   =>'date',
+        //'order'     =>'DESC',
+        'orderby'   => array('post_type'=>'DESC', 'date' => 'DESC'),
         'showposts' =>$nb,
         'post_type' =>$types
     ));
@@ -37,14 +38,17 @@ function recent_posts_function($params=array(),$content=null ){
     if( have_posts() ) :
         while ( have_posts() ): the_post(); //charge le post mais ne l'affiche pas. Permet juste d'utiliser derriere get_the_content, gezt_the_title...
             $return_string.='<div class="col-md-' . $nb_col_bootstrap . '">
-                            <h2><a href="'.get_the_permalink().'">'.get_the_title().'</a>('.get_post_type().')</h2>
-                            <p>'.get_the_excerpt().'</p>
+                            <h2><a href="'.get_the_permalink().'">'.get_the_title().'</a></h2>';
+            if(get_post_type() =='concert'){
+                $return_string.='<p>'.get_field('date_heure').'</p>';
+            }                
+            $return_string.='<p>'.get_the_excerpt().'</p>
                             </div>';
         endwhile;
 
     endif;
 
-    $return_string='</div></div>';
+    $return_string .='</div></div>';
 
     wp_reset_query();
     return $return_string;
